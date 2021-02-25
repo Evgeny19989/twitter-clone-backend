@@ -1,13 +1,13 @@
-// @ts-ignore
-import mongoose from 'mongoose'
+
+const mongoose = require('mongoose')
 
 mongoose.Promise = Promise
 
-mongoose.connect(process.env.MONGO_DBURI, {
+mongoose.connect(process.env.MONGO_DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology:true ,
     useCreateIndex: true,
-    useFindAndModify:true
+    useFindAndModify:false
 }).then(()=>{console.log('connected mongoose')})
 
 const db  = mongoose.connection;

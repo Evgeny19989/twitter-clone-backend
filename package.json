@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.57",
+    "@types/es6-promise": "^3.3.0",
     "@types/express": "^4.17.11",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.36",
@@ -14,6 +15,8 @@
     "@types/passport-local": "^1.0.33",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
+    "es6-promise": "^4.2.8",
+    "es6-shim": "^0.35.6",
     "express": "^4.17.1",
     "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
