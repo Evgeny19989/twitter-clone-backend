@@ -1,5 +1,5 @@
 import express from 'express';
-import mongoose from 'mongoose'
+const  mongoose = require('mongoose')
 import {UserModel, UserModelInterface} from "../models/UserModel";
 import {validationResult} from "express-validator";
 import {generateMD5} from "../utils/generateHash";
