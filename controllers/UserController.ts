@@ -1,11 +1,12 @@
 import express from 'express';
 const  mongoose = require('mongoose')
-import {UserModel, UserModelInterface} from "../models/UserModel";
+import {UserModel, UserModelDocumentInterface, UserModelInterface} from "../models/UserModel";
 import {validationResult} from "express-validator";
 import {generateMD5} from "../utils/generateHash";
 import {sendEmail} from '../utils/sendEmail';
+import jwt from 'jsonwebtoken';
+import { isValidObjectId } from '../utils/isValidObjectId';
 
-const isValidObjectId = mongoose.Types.ObjectId.isValid
 
 class UserController {
 
@@ -79,7 +80,7 @@ class UserController {
                     emailFrom: 'admin@twitter.com',
                     emailTo: data.email,
                     subject: 'Подтверждение почты Twitter Clone Tutorial',
-                    html: `Для того, чтобы подтвердить почту, перейдите <a href="http://localhost:${process.env.PORT}/users/verify?hash=${data.confirmed_hash}">по этой ссылке</a>`,
+                    html: `Для того, чтобы подтвердить почту, перейдите <a href="http://localhost:${process.env.PORT}/auth/verify?hash=${data.confirmed_hash}">по этой ссылке</a>`,
                 },
 
                 (err: Error | null) => {
@@ -135,6 +136,42 @@ class UserController {
 
         }
     }
+
+    async afterLogin(req: express.Request, res: express.Response){
+        try {
+            const user = req.user ? (req.user as UserModelDocumentInterface).toJSON() : undefined;
+            res.json({
+                status: 'success',
+                data: {
+                    ...user,
+                    token: jwt.sign({ data: req.user }, process.env.SECRET_KEY || '123', {
+                        expiresIn: '30 days',
+                    }),
+                },
+            });
+        } catch (error) {
+            res.status(500).json({
+                status: 'error',
+                message: error,
+            });
+        }
+    }
+    async getUserInfo(req: express.Request, res: express.Response) {
+        try {
+            const user = req.user ? (req.user as UserModelDocumentInterface).toJSON() : undefined;
+            res.json({
+                status: 'success',
+                data: user,
+            });
+        } catch (error) {
+            res.status(500).json({
+                status: 'error',
+                message: error,
+            });
+        }
+    }
+
+
 }
 
 export const UserCtrl = new UserController()
