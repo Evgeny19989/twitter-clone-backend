@@ -1,10 +1,11 @@
-import express from 'express';
-const  mongoose = require('mongoose')
+
+import  * as express from "express";
 import {UserModel, UserModelDocumentInterface, UserModelInterface} from "../models/UserModel";
 import {validationResult} from "express-validator";
 import {generateMD5} from "../utils/generateHash";
 import {sendEmail} from '../utils/sendEmail';
-import jwt from 'jsonwebtoken';
+
+import * as jwt from 'jsonwebtoken';
 import { isValidObjectId } from '../utils/isValidObjectId';
 
 

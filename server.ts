@@ -1,15 +1,26 @@
 
+
 const dotenv = require('dotenv')
 dotenv.config()
+import {TweetsCntl} from "./controllers/TweetsController";
 import {UserCtrl} from "./controllers/UserController";
 import {registerValidations} from "./validations/register";
 import './core/db'
 import {passport} from "./core/passport";
+import {createTweetsValidations} from "./validations/createTweets";
 const express = require('express')
 const app  = express()
 
 app.use(express.json())
 app.use(passport.initialize())
+
+app.get('/tweets', TweetsCntl.index)
+app.get('/tweets/:id', TweetsCntl.show)
+app.delete('/tweets/:id', passport.authenticate('jwt'),TweetsCntl.delete)
+app.post('/tweets', passport.authenticate('jwt'), createTweetsValidations,TweetsCntl.create)
+app.patch('/tweets/:id', passport.authenticate('jwt'), createTweetsValidations,TweetsCntl.update)
+
+
 
 app.get('/users', UserCtrl.index)
 app.post('/auth/register',registerValidations, UserCtrl.create)

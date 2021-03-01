@@ -1,10 +1,11 @@
 import {model, Schema, Document} from 'mongoose'
+import { UserModelInterface} from "./UserModel";
 
 
 export interface TweetModelInterface {
     _id?: string;
     text: string;
-    user: string;
+    user: UserModelInterface;
 
 
 }
@@ -16,23 +17,20 @@ const TweetSchema = new Schema({
 
         text: {
             required: true,
-            type: String
+            type: String,
+            maxlength:280
+
         },
     user: {
         required: true,
         ref:'User',
         type: Schema.Types.ObjectId
     }
+    },
+    {
+        timestamps: true,
     }
 );
-
-TweetSchema.set('toJSON', {
-    transform: function (_, obj) {
-        delete obj.password;
-        delete obj.confirmed_hash;
-        return obj;
-    },
-});
 
 
 export const TweetModel = model<TweetModelDocumentInterface>('Tweet', TweetSchema)
