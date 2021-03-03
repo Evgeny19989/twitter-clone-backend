@@ -25,7 +25,12 @@ const TweetSchema = new Schema({
         required: true,
         ref:'User',
         type: Schema.Types.ObjectId
-    }
+    },
+    images:[
+        {
+            type:String
+        }
+    ]
     },
     {
         timestamps: true,
