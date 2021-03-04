@@ -62,6 +62,7 @@ class TweetsController {
                 }
                 const data: any = {
                     text: req.body.text,
+                    images:req.body.images,
                     user: user._id
                 }
 

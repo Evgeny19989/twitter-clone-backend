@@ -6,6 +6,7 @@ export interface TweetModelInterface {
     _id?: string;
     text: string;
     user: UserModelInterface;
+    images?:string[]
 
 
 }

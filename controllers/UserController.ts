@@ -157,6 +157,10 @@ class UserController {
             });
         }
     }
+
+
+
+
     async getUserInfo(req: express.Request, res: express.Response) {
         try {
             const user = req.user ? (req.user as UserModelDocumentInterface).toJSON() : undefined;
